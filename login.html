@@ -1,0 +1,58 @@
+<html>
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TalkNow Chat App</title>
+    <!-- <script defer src="/__/firebase/5.5.4/firebase-app.js"></script>
+    <script defer src="/__/firebase/5.5.4/firebase-database.js"></script>
+    <script defer src="/__/firebase/init.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>    
+ -->
+<!-- <h1 align = "center"> TalkNow</h1> -->
+<h1 align = "center"><a href="http://"><img src = "messageIcon.png"; display= "inline"; width="50px"; height="50px";></a> TalkNow</h1>
+<link rel="icon" href="messageIcon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+    
+<!-- <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-firestore.js"></script> -->
+
+<body>
+<ul id="credentials"></ul>    
+<!-- <div class="alert">Your message has been sent to database</div>> -->
+<div class="login-page">
+<div class="form">
+    <form id="register-form" class = "register-form">
+    <input id="username" type="text" placeholder="username"/>
+    <input id="password" type="text" placeholder="password"/>
+    <!--<input type="text" id="email" placeholder="email id"/>-->
+    <button type="submit" id="register">Register</button>
+    <p class="message">Already Registered? <a href="#">Login</a>
+    </p>
+    <p class="message">Reset Password <a href="#">Reset</a>
+    </p>
+    </form>
+    
+    <form id="login-form" class = "login-form">
+    <input id="usernamelog" type="text" placeholder="username"/>
+    <input id ="passwordlog" type="text" placeholder="password"/>
+    <button type="submit" id="login">Login</button>
+    </form> 
+</div>    
+</div>
+
+    <script src='http://code.jquery.com/jquery-3.2.1.min.js'></script>
+    
+    <script>
+    
+    $('.message a').click(function(){
+    $('form').animate({height:"toggle",opacity:"toggle"}, "slow");
+    });
+    
+    </script>
+            
+<script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>            
+<script src="app.js"></script>
+    
+</body>
+</html>
