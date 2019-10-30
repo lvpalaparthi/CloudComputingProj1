@@ -3,31 +3,18 @@
 async function main(){
 const Compute = require('@google-cloud/compute')
 const compute = new Compute({
-    projectId: 'cpeg673proj1',
+    projectId: 'cpeg673proj1-256900',
     keyFilename: './keyFile.json'
 })
+
 const zone = compute.zone('us-east1-b')
 var counter = 2;
-// function findName(){
-//         vms = getVMs();
-//         for(let i=3; i<vms[0].length; i++){
-//             let temp = vms[0][i].metadata.name
-//             console.log(vm${i+1}:${temp})
-//             vm.push(temp)
-//         }
-//       return vm;
-// }
-// const name = findName();
-// var random = Math.floor(Math.random() * 20) + 1
-// //console.log(random)
-//  name = `instance-${random}`
-
+//incrementing the vm name 
 function vmName(){
     return `instance-${++counter}`
 }
-    const name = vmName()
-
-
+//vm configs 
+const name = vmName()
 const config = {
     http: true,
     https: true,
@@ -45,19 +32,29 @@ const config = {
             'autoDelete': true,
             'deviceName': name,
             'initializeParams': {
-                'sourceImage': 'projects/cpeg673proj1/global/images/proj1image',
-                'diskType': 'projects/cpeg673proj1/zones/us-east1-b/diskTypes/pd-standard',
+                'sourceImage': 'projects/cpeg673proj1-256900/global/images/proj1image',
+                'diskType': 'projects/cpeg673proj1-256900/zones/us-east1-b/diskTypes/pd-standard',
                 'diskSizeGb': 30
             }
         }
     ],
 }
-//sample hello world endpoint
-var express = require('express'),
-         app = express();
-app.get('/', (req, res) => {
-    res.send('Hello World');
-});
+var express = require('express');
+const app = express();
+const http= require('http');
+const{createTerminus} = require(`@godaddy/terminus`)
+
+//health check endpoint
+app.get('/health', (req, res) => {
+    res.send(`HealthCheck Status: ${res.statusCode} => VIRTUAL MACHINE IS HEALTHY`)
+  })
+  const server = http.createServer(app)
+
+  createTerminus(server, {
+    signal: 'SIGINT',
+    healthChecks: { '/healthcheck': onHealthCheck },
+    onSignal
+  })
 
 //create vm endpoint
 app.get('/create', async function makeVMs(req, res){
@@ -86,8 +83,11 @@ app.get('/create', async function makeVMs(req, res){
 })
 console.log(`VM ${name} created!`)
 
- res.send(`YOU HAVE SUCCEEDED! CREATE HTTP REQUEST RECEIVED! ${name}`)
-
+res.write(`YOU HAVE SUCCEEDED! CREATE HTTP REQUEST RECEIVED!\n`)
+res.write(`VM ${name} HAS BEEN CREATED\n`)
+res.write(`HealthCheck Status: ${res.statusCode}`)
+res.end()
+console.log()
 })
 
 //list vm endpoint
@@ -98,18 +98,23 @@ try{
          config.disks[0].deviceName = name;
         const vms = await compute.getVMs({maxResults:10})
          console.log(`Found ${vms[0].length} VMs!`)
-        //vms.forEach(vms =>
-        //listVMs();
-    res.send(`YOU HAVE SUCCEEDED! LIST HTTP REQUEST RECEIVED! ${vms[0].length}`)
+        //vms.forEach(vms => console.log(vms))
+        console.log("Current VMs running:")
+        for(let i=0; i<vms[0].length; i++){
+             let temp = vms[0][i].metadata.name
+             console.log(temp)
 }
-//.then(() => {
-//console.log(`getting VMs`)
-//})
+res.write(`YOU HAVE SUCCEEDED! LIST HTTP REQUEST RECEIVED!\n`)
+res.write(`CURRENTLY ${vms[0].length} VMS RUNNING!\n`)
+res.write(`HealthCheck Status: ${res.statusCode}`)
+res.end()
+console.log(" ")
+ console.log(`HealthCheck Status: ${res.statusCode}`);
+console.log('VMs is healthy');
+}
 catch(err) {
 console.log(err)
 }
-//res.send(`YOU HAVE SUCCEEDED! LIST HTTP REQUEST RECEIVED! ${vms[0].length}`))
-
  });
 
 //delete vm endpoint
@@ -120,25 +125,21 @@ try{
     const vm = zone.vm(`instance-${req.params.id}`)
         const [operation] = await vm.delete()
 await operation.promise()
- res.send(`YOU HAVE SUCCEEDED! DELETE HTTP REQUEST RECEIVED!${vm}`)
-
-    //    await operation.promise()
+ res.write(`YOU HAVE SUCCEEDED! DELETE HTTP REQUEST RECEIVED!\n`)
+res.write(`VM instance-$req.params.id} HAS BEEN DELETED\n`)
+res.write(`HealthCheck Status: ${res.statusCode}`)
+res.end()
+console.log(`VM ${name} has been deleted`)
 }
-//.then(() => {
-//    console.log(`VM deleted!`)
-//})
 catch(err){
         console.log(err)
 }
-//    res.send(`YOU HAVE SUCCEEDED! DELETE HTTP REQUEST RECEIVED!${vm}`)
 });
-
-//load balancer
-
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 8082;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
 
 }
 
 main().catch(console.error)
+
 
