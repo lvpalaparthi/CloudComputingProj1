@@ -1,0 +1,125 @@
+h1{
+    color: white;
+    padding:10% 0 0;
+    font-size: 50px; 
+}
+body{
+    background-color:#DDA0DD;
+
+}
+
+.login-page{
+    width: 360px;
+    /* padding: 10% 0 0; */
+    margin: auto;
+}
+
+.forgot_password{
+    max-width: 360px;
+    background: rgba(255,255,255,0.5);
+    width: 360px;
+    padding: 10 10 10;
+    font-family: "Roboto" sans-serif;
+    margin: 0 0 100px;
+    
+}
+
+.forgot_password input{
+    font-family: "Roboto" sans-serif;
+    outline: 1;
+    background: #f2f2f2;
+    border:0;
+    padding: 11px;
+    box-sizing: border-box;
+    font-size: 15px;   
+}
+
+
+
+.forgot_password button{
+    font-family: "Roboto" sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #4CAF50;
+    color: #FFFFFF;
+    font-size: 15px;
+    cursor: pointer;
+    outline: 0;
+    padding: 13px;
+}
+
+
+.forgot_password button:hover,.forgot_password button:active{
+    background: #43A047;
+}
+
+.usernameemail{
+    color: darkgreen;
+}
+
+.form{
+    position: relative;
+    z-index: 1;
+    background: rgba(255,255,255,0.5);
+    max-width: 360px;
+    margin: 0 auto 100px;
+    padding: 45px;
+    text-align: center;    
+}
+
+.form input{
+    font-family: "Roboto" sans-serif;
+    outline: 1;
+    background: #f2f2f2;
+    width: 100%;
+    border:0;
+    margin:0 0 10px;
+    padding: 18px;
+    box-sizing: border-box;
+    font-size: 15px;
+    
+}
+
+.form button{
+    font-family: "Roboto" sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #4CAF50;
+    width: 100%;
+    border:0;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.form button:hover,.form button:active{
+    background: #43A047;
+}
+
+.form .message {
+    margin: 15px 0 0;
+    color: darkgreen;
+    font-size: 17px;
+    font-style: italic;
+    
+}
+
+.form .message a{
+    color:brown;
+    text-decoration: none;
+}
+
+.alert{
+    text-align: center;
+    padding: 10px;
+    background: #79c879;
+    color: #fff;
+    margin-bottom:10px;
+    display:none;
+}
+
+.form .register-form{
+    display: none;
+}
+
