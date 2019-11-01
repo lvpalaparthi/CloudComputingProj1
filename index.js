@@ -9,11 +9,11 @@ const compute = new Compute({
 
 const zone = compute.zone('us-east1-b')
 var counter = 2;
-//incrementing the vm name 
+//incrementing the vm name
 function vmName(){
     return `instance-${++counter}`
 }
-//vm configs 
+//vm configs
 const name = vmName()
 const config = {
     http: true,
@@ -49,7 +49,14 @@ app.get('/health', (req, res) => {
     res.send(`HealthCheck Status: ${res.statusCode} => VIRTUAL MACHINE IS HEALTHY`)
   })
   const server = http.createServer(app)
-
+function onSignal () {
+  console.log('server is starting cleanup')
+  // start cleanup of resource, like databases or file descriptors
+}
+async function onHealthCheck () {
+  // checks if the system is healthy, like the db connection is live
+  // resolves, if health, rejects if not
+}
   createTerminus(server, {
     signal: 'SIGINT',
     healthChecks: { '/healthcheck': onHealthCheck },
@@ -126,10 +133,10 @@ try{
         const [operation] = await vm.delete()
 await operation.promise()
  res.write(`YOU HAVE SUCCEEDED! DELETE HTTP REQUEST RECEIVED!\n`)
-res.write(`VM instance-$req.params.id} HAS BEEN DELETED\n`)
+res.write(`REQUESTED VM HAS BEEN DELETED\n`)
 res.write(`HealthCheck Status: ${res.statusCode}`)
 res.end()
-console.log(`VM ${name} has been deleted`)
+console.log(`Requested VM has been deleted`)
 }
 catch(err){
         console.log(err)
@@ -141,5 +148,3 @@ app.listen(port, () => console.log(`Listening on port ${port}...`));
 }
 
 main().catch(console.error)
-
-
